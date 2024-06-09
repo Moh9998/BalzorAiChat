@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Name {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      Name?    @relation(name: "NameOnNames", fields: [nameId], references: [id])
+  nameId    String?
+  names     Name[]   @relation(name: "NameOnNames")
+  updatedAt DateTime @updatedAt
+}
